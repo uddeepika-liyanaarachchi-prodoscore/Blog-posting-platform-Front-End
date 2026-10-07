@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Poster Project</title>
-    <link rel="stylesheet" href="../app/css/styles.css">
+    <link rel="stylesheet" href="../app/css/styles.css" />
   </head>
   <body>
     <!-- LOGIN PAGE -->
@@ -17,7 +17,7 @@
             <input
               type="text"
               name="username"
-              id="username"
+              id="login_username"
               required
               placeholder="Enter username"
             />
@@ -58,8 +58,47 @@
             </svg>
           </button>
         </div>
-        <p class="signup">Don't have an account? <a href="/sign-up">Sign up</a></p>
+        <p class="signup" id="sign-up-btn">
+          Don't have an account? <a href="#">Sign up</a>
+        </p>
       </div>
     </section>
+
+    <!-- SIGN UP PAGE -->
+    <section id="sign-up-view" class="hidden">
+      <!-- From Uiverse.io by VIJAYAACHI -->
+      <div class="form-container">
+        <p class="title">Login</p>
+        <form class="form" id="sign-up-form">
+          <div class="input-group">
+            <label for="name">Name</label>
+            <input placeholder="" id="signup_username" name="username" type="text" />
+          </div>
+          <div class="input-group">
+            <label for="phone">Phone</label>
+            <input placeholder="" id="phone" name="phone" type="phone" />
+            <label for="email">Email</label>
+            <input placeholder="" id="email" name="email" type="email" />
+            <label for="location">Location</label>
+            <input placeholder="" type="email" />
+          </div>
+          <button style="margin-top: 6%" class="sign">Submit</button>
+        </form>
+        <div class="social-message">
+          <div class="line"></div>
+          <p class="message">Entre Details to view Virtual Tour</p>
+          <div class="line"></div>
+        </div>
+         <p class="signin" id="sign-in-btn">
+          Need to login in ? <a href="#">Sign In</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="hidden" id="main-view">
+        Main 
+    </section>
+
+    <script type="module" src="../app/js/navigation.js"></script>
   </body>
 </html>
