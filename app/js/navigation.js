@@ -1,6 +1,7 @@
 const signinView = document.getElementById("login-view");
 const signUpView = document.getElementById("sign-up-view");
 const mainView = document.getElementById("main-view")
+const myView = document.getElementById("my-view")
 
 const signInForm = document.getElementById("login-form");
 const signUpForm = document.getElementById("sign-up-form");
@@ -9,6 +10,7 @@ const singUpButton = document.getElementById("sign-up-btn");
 const singInButton = document.getElementById("sign-in-btn");
 
 function showView(viewToSHow){
+    mainView.classList.add("hidden")
     signinView.classList.add("hidden");
     signUpView.classList.add("hidden")
 
@@ -36,5 +38,5 @@ signUpForm.addEventListener("submit", (e) => {
 signInForm.addEventListener("submit", (e) => {
   e.preventDefault();
   signInForm.reset();
-  showView(mainView);
+  showView(myView);
 });
