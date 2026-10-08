@@ -8,18 +8,38 @@ const signUpForm = document.getElementById("sign-up-form");
 
 const singUpButton = document.getElementById("sign-up-btn");
 const singInButton = document.getElementById("sign-in-btn");
+const loginBtnInNavbar = document.getElementById("navlogin-btn");
+const HomeBtnInNavbar = document.getElementById("navhome-btn");
+
+document.addEventListener("DOMContentLoaded", () => {
+  showView(mainView);
+});
 
 function showView(viewToSHow){
     mainView.classList.add("hidden")
     signinView.classList.add("hidden");
     signUpView.classList.add("hidden")
-
+    mainView.classList.add("hidden")
+    myView.classList.add("hidden")
     viewToSHow.classList.remove("hidden")
 }
 
+loginBtnInNavbar.addEventListener("click",(e)=>{
+    e.preventDefault()
+    mainView.classList.add("hidden")
+    showView(signinView)
+
+})
+
+HomeBtnInNavbar.addEventListener("click",(e)=>{
+  e.preventDefault()
+  console.log("Click una")
+  signinView.classList.add("hidden")
+  showView(mainView)
+})
+
 singUpButton.addEventListener("click",(e)=>{
     e.preventDefault()
-    console.log("Clicked una sign up eka")
     showView(signUpView)
 })
 
