@@ -2,13 +2,17 @@ const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1",
 });
 
-const PUBLIC_ENDPOINTS = ["/auth/register", "/auth/login", "/posts/get-all-posts"];
+const PUBLIC_ENDPOINTS = [
+  "/auth/register",
+  "/auth/login",
+  "/posts/get-all-posts",
+];
 
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("accessToken");
     const isPublic = PUBLIC_ENDPOINTS.some((some) => config.url?.includes(some))
 
-    if (token && isPublic){
+    if (token && !isPublic){
         config.headers.Authorization = `Bearer ${token}`
     }
     return config
@@ -25,13 +29,15 @@ api.interceptors.response.use(
         if(error.response?.status === 401 && !isPublic && !originalRequest._retry){
             originalRequest._retry = true;
             try{
-                 const refreshToken = localStorage.getItem("refreshToken");
+                 const refresh_token = localStorage.getItem("refreshToken");
 
-                 if (!refreshToken) {
+                 if (!refresh_token) {
                    throw new Error("No Refresh TOken Available");
                  }
 
-                 const res = await api.post("/auth/refresh",{refreshToken});
+                 const res = await axios.post(`${api.defaults.baseURL}/auth/refresh`, {refresh_token});
+                 console.log(res.data.accessToken);
+                 
                  localStorage.setItem("accessToken", res.data.accessToken);
 
                  originalRequest.headers.Authorization = `Bearer ${res.accessToken}`;
@@ -39,9 +45,9 @@ api.interceptors.response.use(
 
             }catch(error){
                   localStorage.clear();
-                  window.location.href = "/login";
-                  console.error(err);
-                  return Promise.reject(err);
+                //   window.location.href = "/";
+                  console.error(error.response.data.message);
+                  return Promise.reject(error);
                 
             }
         }

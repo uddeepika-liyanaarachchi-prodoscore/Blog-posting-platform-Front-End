@@ -5,6 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Poster Project</title>
     <link rel="stylesheet" href="../app/css/styles.css" />
+    <style>
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  background: #ffffff;
+  color: #222;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 28px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-body {
+  padding: 1.5rem 2rem;
+}
+
+.modal-body h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #111;
+  line-height: 1.3;
+}
+
+.modal-body p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #444;
+  white-space: pre-wrap; 
+}
+    </style>
   </head>
   <body>
       <div class="nav">
@@ -108,76 +192,31 @@
         <h1>Welcome to Blog Poster</h1>
         <button id="logout-btn" class="logout-btn">Logout</button>
       </header>
-
-      <section class="pins-grid">
-        <div class="card">
-          <img
-            class="card-bg"
-            src="https://static.vecteezy.com/system/resources/thumbnails/057/068/323/small/single-fresh-red-strawberry-on-table-green-background-food-fruit-sweet-macro-juicy-plant-image-photo.jpg"
-            alt="Strawberry"
-          />
-          <div class="overlay"></div>
-          <div class="details">
-            <h2>Fresh Strawberry</h2>
-            <p>Sweet and juicy macro photo on green background.</p>
-            <button class="btn">View</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <img
-            class="card-bg"
-            src="https://static.vecteezy.com/system/resources/thumbnails/057/068/323/small/single-fresh-red-strawberry-on-table-green-background-food-fruit-sweet-macro-juicy-plant-image-photo.jpg"
-            alt="Strawberry"
-          />
-          <div class="overlay"></div>
-          <div class="details">
-            <h2>Picture Title</h2>
-            <p>Simple description goes here with clean typography.</p>
-            <button class="btn">View</button>
-          </div>
-        </div>
-      </section>
+      <section class="pins-grid"></section>
     </section>
 
     <section id="main-view" class="hidden">
       <header>
-        <h1>Explore Pins</h1>
+        <h1>Read & Explore</h1>
       </header>
-
-      <section class="pins-grid">
-        <div class="card">
-          <img
-            class="card-bg"
-            src="https://static.vecteezy.com/system/resources/thumbnails/057/068/323/small/single-fresh-red-strawberry-on-table-green-background-food-fruit-sweet-macro-juicy-plant-image-photo.jpg"
-            alt="Strawberry"
-          />
-          <div class="overlay"></div>
-          <div class="details">
-            <h2>Fresh Strawberry</h2>
-            <p>Sweet and juicy macro photo on green background.</p>
-            <button class="btn">View</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <img
-            class="card-bg"
-            src="https://static.vecteezy.com/system/resources/thumbnails/057/068/323/small/single-fresh-red-strawberry-on-table-green-background-food-fruit-sweet-macro-juicy-plant-image-photo.jpg"
-            alt="Strawberry"
-          />
-          <div class="overlay"></div>
-          <div class="details">
-            <h2>Picture Title</h2>
-            <p>Simple description goes here with clean typography.</p>
-            <button class="btn">View</button>
-          </div>
-        </div>
-      </section>
+      <section class="pins-grid"></section>
     </section>
+
+<div id="post-modal" class="modal hidden">
+  <div class="modal-backdrop" id="modal-close-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+    <img id="modal-post-img" src="" alt="Post banner" class="modal-img" />
+    <div class="modal-body">
+      <h1 id="modal-post-title"></h1>
+      <p id="modal-post-desc"></p>
+    </div>
+  </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="../app/js/user.js" defer></script>
-    <script type="module" src="../app/js/api.js"></script>
+<script>
 
+</script>
   </body>
 </html>

@@ -3,7 +3,7 @@ const signinView = document.getElementById("login-view");
 const signUpView = document.getElementById("sign-up-view");
 const mainView = document.getElementById("main-view");
 const myView = document.getElementById("my-view");
-
+import { loadPublicPosts, loadUserPosts } from "./posts.js";
 const signInForm = document.getElementById("login-form");
 const signUpForm = document.getElementById("sign-up-form");
 
@@ -17,12 +17,19 @@ const logoutButton = document.getElementById("logout-btn");
 let loggedIn;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("access_token");
-
-  if(!token){
-    showView(mainView)
-  }
+  const token = localStorage.getItem("accessToken");
+   loadPublicPosts(); 
+if (token) {
+  loggedIn = true;
+  updateNavbar();
+  showView(myView);
+  loadUserPosts(); 
+} else {
+  loggedIn = false;
+  updateNavbar();
   showView(mainView);
+ 
+}
 });
 
 function updateNavbar() {
@@ -101,15 +108,19 @@ signInForm.addEventListener("submit", async (e) => {
       password,
     });  
 
-    const { access_token, refresh_token } = response.data;
+    const { access_token, refresh_token,id } = response.data;
 
     if (access_token) localStorage.setItem("accessToken", access_token);
     if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
-
+    if (id) localStorage.setItem("userID",id)
+    console.log(response.data);
+    
     loggedIn = true;
     updateNavbar();
     signInForm.reset();
     showView(myView);
+    loadUserPosts(); 
+
   } catch (err) {
     console.error("Login failed:", err);
     const message = err.response?.data?.message || "Invalid credentials. Please try again.";
