@@ -20,13 +20,13 @@
         <p class="title">Login</p>
         <form class="form" id="login-form">
           <div class="input-group">
-            <label for="username">Username</label>
+            <label for="email">Email</label>
             <input
-              type="text"
-              name="username"
-              id="login_username"
+              type="email"
+              name="email"
+              id="login_email"
               required
-              placeholder="Enter username"
+              placeholder="Enter e-mail"
             />
           </div>
           <div class="input-group">
@@ -73,26 +73,22 @@
 
     <!-- SIGN UP PAGE -->
     <section id="sign-up-view" class="hidden">
-      <!-- From Uiverse.io by VIJAYAACHI -->
       <div class="form-container">
-        <p class="title">Login</p>
+        <p class="title">Register</p>
         <form class="form" id="sign-up-form">
           <div class="input-group">
-            <label for="name">Name</label>
+            <label for="email">Email</label>
             <input
-              placeholder=""
-              id="signup_username"
-              name="username"
-              type="text"
+              placeholder="enter your email"
+              id="signup_mail"
+              name="email"
+              type="email"
             />
           </div>
           <div class="input-group">
-            <label for="phone">Phone</label>
-            <input placeholder="" id="phone" name="phone" type="phone" />
-            <label for="email">Email</label>
-            <input placeholder="" id="email" name="email" type="email" />
-            <label for="location">Location</label>
-            <input placeholder="" type="email" />
+            <label for="password">Password</label>
+            <input placeholder="enter password" id="register_password" name="text" type="text" />
+           
           </div>
           <button style="margin-top: 6%" class="sign">Submit</button>
         </form>
@@ -180,8 +176,8 @@
       </section>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="../app/js/navigation.js" defer></script>
-    <script src="../app/js/api.js"></script>
+    <script type="module" src="../app/js/user.js" defer></script>
+    <script type="module" src="../app/js/api.js"></script>
 
   </body>
 </html>
