@@ -31,8 +31,8 @@ api.interceptors.response.use(
                    throw new Error("No Refresh TOken Available");
                  }
 
-                 const res = await refreshTokens(refreshToken);
-                 localStorage.setItem("accessToken", res.accessToken);
+                 const res = await api.post("/auth/refresh",{refreshToken});
+                 localStorage.setItem("accessToken", res.data.accessToken);
 
                  originalRequest.headers.Authorization = `Bearer ${res.accessToken}`;
                  return axios(originalRequest);
