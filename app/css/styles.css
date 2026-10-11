@@ -21,10 +21,15 @@ body {
   pointer-events: none;
 }
 
+.nav-icon {
+  display: none;
+}
+
 .nav {
   position: relative;
   height: 60px;
 }
+
 .nav-container {
   display: flex;
   gap: 1.5rem;
@@ -32,8 +37,9 @@ body {
   justify-content: flex-end;
   background: #111827;
   padding: 1rem 2rem;
-  width: auto;
-  min-width: 100vw;
+  min-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-link {
@@ -529,3 +535,110 @@ box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         transform: scale(1.15);
         filter: blur(2px);
       }
+
+/* --------------------------------Media Queries----------------------------------------- */
+@media screen and (max-width: 600px) {
+  .nav {
+    position: fixed;       
+    bottom: 0;             
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 999;         
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);   
+  }
+
+  .nav-container {
+    justify-content: space-around;
+    padding: 0.6rem 1rem;
+    background: #0d131f;          
+    min-width: 100%;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav-icon {
+    display: inline-block;
+  }
+
+  .nav-link {
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  body {
+    padding-bottom: 70px; 
+  }
+}
+
+/* ========================================================
+   2. TABLETS & SMALL LAPTOPS (601px to 1024px)
+======================================================== */
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+  .nav-container {
+    padding: 1rem 2rem;
+    gap: 1rem;
+  }
+
+  .form-container {
+    width: 420px;
+  }
+
+  #main-view,
+  #my-view {
+    padding: 30px 20px;
+  }
+
+  header h1 {
+    font-size: 1.9rem;
+  }
+
+  .pins-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
+}
+
+/* ========================================================
+   3. DESKTOPS & STANDARD LAPTOPS (1025px to 1440px)
+======================================================== */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .pins-grid {
+    grid-template-columns: repeat(3, 1fr); /* තීරුවකට cards 3ක් */
+    gap: 25px;
+  }
+}
+
+/* ========================================================
+   4. ULTRA-WIDE & LARGE SCREENS (min-width: 1441px)
+======================================================== */
+@media screen and (min-width: 1441px) {
+  .nav-container {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  header,
+  .pins-grid {
+    max-width: 1600px;
+  }
+
+  .pins-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+
+  .card {
+    height: 420px;
+  }
+}

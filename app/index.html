@@ -6,99 +6,168 @@
     <title>Blog Poster Project</title>
     <link rel="stylesheet" href="../app/css/styles.css" />
     <style>
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-}
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 1rem;
+      }
 
-.modal.hidden {
-  display: none;
-}
+      .modal.hidden {
+        display: none;
+      }
 
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
-}
+      .modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(4px);
+      }
 
-.modal-content {
-  position: relative;
-  background: #ffffff;
-  color: #222;
-  border-radius: 12px;
-  max-width: 700px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  z-index: 1001;
-}
+      .modal-content {
+        position: relative;
+        background: #ffffff;
+        color: #222;
+        border-radius: 12px;
+        max-width: 700px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+      }
 
-.modal-close-btn {
-  position: absolute;
-  top: 12px;
-  right: 15px;
-  font-size: 28px;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  transition: background 0.2s;
-}
+      .modal-close-btn {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        font-size: 28px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        transition: background 0.2s;
+      }
 
-.modal-close-btn:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
+      .modal-close-btn:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
 
-.modal-img {
-  width: 100%;
-  max-height: 360px;
-  object-fit: cover;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
+      .modal-img {
+        width: 100%;
+        max-height: 360px;
+        object-fit: cover;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
 
-.modal-body {
-  padding: 1.5rem 2rem;
-}
+      .modal-body {
+        padding: 1.5rem 2rem;
+      }
 
-.modal-body h1 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #111;
-  line-height: 1.3;
-}
+      .modal-body h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #111;
+        line-height: 1.3;
+      }
 
-.modal-body p {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #444;
-  white-space: pre-wrap; 
-}
+      .modal-body p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #444;
+        white-space: pre-wrap;
+      }
     </style>
   </head>
   <body>
-      <div class="nav">
+    <!-- <div class="nav">
         <div class="nav-container">
           <a href="#" class="nav-link" id="navhome-btn">Home</a>
           <a href="#" class="nav-link " id="navlogin-btn">login</a>
           <a href="#" class="nav-link hidden" id="navdashboard-btn">Dashboard</a>
         </div>
+      </div> -->
+    <div class="nav">
+      <div class="nav-container">
+        <!-- Home Link -->
+        <a href="#" class="nav-link" id="navhome-btn" title="Home">
+          <svg
+            class="nav-icon"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span class="nav-text">Home</span>
+        </a>
+
+        <!-- Login Link -->
+        <a href="#" class="nav-link" id="navlogin-btn" title="Login">
+          <svg
+            class="nav-icon"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          <span class="nav-text">Login</span>
+        </a>
+
+        <!-- Dashboard Link -->
+        <a
+          href="#"
+          class="nav-link hidden"
+          id="navdashboard-btn"
+          title="Dashboard"
+        >
+          <svg
+            class="nav-icon"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          <span class="nav-text">Dashboard</span>
+        </a>
       </div>
-      <!-- LOGIN PAGE -->
+    </div>
+
+    <!-- LOGIN PAGE -->
     <section id="login-view" class="hidden">
       <div class="form-container">
         <p class="title">Login</p>
@@ -171,8 +240,12 @@
           </div>
           <div class="input-group">
             <label for="password">Password</label>
-            <input placeholder="enter password" id="register_password" name="text" type="text" />
-           
+            <input
+              placeholder="enter password"
+              id="register_password"
+              name="text"
+              type="text"
+            />
           </div>
           <button style="margin-top: 6%" class="sign">Submit</button>
         </form>
@@ -202,21 +275,19 @@
       <section class="pins-grid"></section>
     </section>
 
-<div id="post-modal" class="modal hidden">
-  <div class="modal-backdrop" id="modal-close-backdrop"></div>
-  <div class="modal-content">
-    <button class="modal-close-btn" id="modal-close-btn">&times;</button>
-    <img id="modal-post-img" src="" alt="Post banner" class="modal-img" />
-    <div class="modal-body">
-      <h1 id="modal-post-title"></h1>
-      <p id="modal-post-desc"></p>
+    <div id="post-modal" class="modal hidden">
+      <div class="modal-backdrop" id="modal-close-backdrop"></div>
+      <div class="modal-content">
+        <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+        <img id="modal-post-img" src="" alt="Post banner" class="modal-img" />
+        <div class="modal-body">
+          <h1 id="modal-post-title"></h1>
+          <p id="modal-post-desc"></p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="../app/js/user.js" defer></script>
-<script>
-
-</script>
+    <script></script>
   </body>
 </html>
