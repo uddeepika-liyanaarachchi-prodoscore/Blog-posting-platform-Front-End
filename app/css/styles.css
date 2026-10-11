@@ -537,6 +537,31 @@ box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       }
 
 /* --------------------------------Media Queries----------------------------------------- */
+
+@media screen and (max-width: 425px) {
+  header {
+    display: flex;
+    flex-direction: column;  
+    align-items: flex-start; 
+    gap: 12px;               
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+    margin-left: 26px;
+    text-align: center;       
+  }
+
+  .logout-btn {
+    align-self: flex-start; 
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    width: 60%;
+    margin-left: 59px;
+  }
+}
 @media screen and (max-width: 600px) {
   .nav {
     position: fixed;       
@@ -581,9 +606,6 @@ box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 }
 
-/* ========================================================
-   2. TABLETS & SMALL LAPTOPS (601px to 1024px)
-======================================================== */
 @media screen and (min-width: 601px) and (max-width: 1024px) {
   .nav-container {
     padding: 1rem 2rem;
@@ -608,10 +630,6 @@ box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     gap: 20px;
   }
 }
-
-/* ========================================================
-   3. DESKTOPS & STANDARD LAPTOPS (1025px to 1440px)
-======================================================== */
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
   .pins-grid {
     grid-template-columns: repeat(3, 1fr); /* තීරුවකට cards 3ක් */
@@ -619,9 +637,6 @@ box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
 }
 
-/* ========================================================
-   4. ULTRA-WIDE & LARGE SCREENS (min-width: 1441px)
-======================================================== */
 @media screen and (min-width: 1441px) {
   .nav-container {
     max-width: 1600px;
