@@ -1,12 +1,16 @@
 import api from "./api.js";
 
-// Load wana posts store karaganna Map ekak
 const postsStore = new Map();
 
+function truncateText(text, maxLength = 20) {
+  if (!text) return "";
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+}
+
 function createCardHTML(post) {
-  const imageUrl =
-    post.image_url ||
-    "https://static.vecteezy.com/system/resources/thumbnails/057/068/323/small/single-fresh-red-strawberry-on-table-green-background-food-fruit-sweet-macro-juicy-plant-image-photo.jpg";
+  const imageUrl = post.image_url 
+  const rawDescription = post.content || post.description || "";
+  const shortDescription = truncateText(rawDescription, 20);
 
   return `
     <div class="card" data-id="${post.id}">
@@ -14,14 +18,13 @@ function createCardHTML(post) {
       <div class="overlay"></div>
       <div class="details">
         <h2>${post.title}</h2>
-        <p>${post.content || post.description || ""}</p>
+        <p>${shortDescription}</p>
         <button class="btn view-post-btn" data-id="${post.id}">View</button>
       </div>
     </div>
   `;
 }
 
-// Modal eka display karana function eka
 export function openPostModal(post) {
   const modal = document.getElementById("post-modal");
   const modalImg = document.getElementById("modal-post-img");
@@ -38,7 +41,7 @@ export function openPostModal(post) {
     post.content || post.description || "No content available.";
 
   modal.classList.remove("hidden");
-  document.body.style.overflow = "hidden"; // Background scrolling stop karanna
+  document.body.style.overflow = "hidden"; 
 }
 
 export function closePostModal() {
@@ -69,7 +72,6 @@ export async function loadPublicPosts(search = "", page = 1, limit = 10) {
       return;
     }
 
-    // Post details save karaganna
     posts.forEach((post) => postsStore.set(String(post.id), post));
 
     container.innerHTML = posts.map((post) => createCardHTML(post)).join("");
@@ -105,7 +107,6 @@ export async function loadUserPosts(search = "", page = 1, limit = 10) {
       return;
     }
 
-    // User ge posts th store karaganna
     posts.forEach((post) => postsStore.set(String(post.id), post));
 
     container.innerHTML = posts.map((post) => createCardHTML(post)).join("");
@@ -115,9 +116,7 @@ export async function loadUserPosts(search = "", page = 1, limit = 10) {
   }
 }
 
-// "View" button clicks saha Modal close listeners setup karanna
 document.addEventListener("click", (e) => {
-  // View button click unada check kirima
   const viewBtn = e.target.closest(".view-post-btn");
   if (viewBtn) {
     const postId = viewBtn.dataset.id;
@@ -128,7 +127,6 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  // Modal eka close karana buttons (X button eka ho black background eka)
   if (
     e.target.id === "modal-close-btn" ||
     e.target.id === "modal-close-backdrop"
@@ -137,7 +135,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// ESC key ebuwama modal eka close wenna
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closePostModal();
