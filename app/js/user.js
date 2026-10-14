@@ -80,10 +80,10 @@ singInButton.addEventListener("click", (e) => {
   showView(signinView);
 });
 
-signUpForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+// signUpForm.addEventListener("submit", (e) => {
+//   e.preventDefault();
 
-});
+// });
 
 //-------------------------Logout----------------------------
 
