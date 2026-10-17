@@ -1,11 +1,18 @@
 import api from "./api.js";
+import { loadPublicPosts, loadUserPosts } from "./posts.js";
+
 const signinView = document.getElementById("login-view");
 const signUpView = document.getElementById("sign-up-view");
 const mainView = document.getElementById("main-view");
 const myView = document.getElementById("my-view");
-import { loadPublicPosts, loadUserPosts } from "./posts.js";
+const forgotView = document.getElementById("forgot-view");
+const resetPasswordView = document.getElementById("reset-password-view");
+
 const signInForm = document.getElementById("login-form");
 const signUpForm = document.getElementById("sign-up-form");
+const forgotPasswordLink = document.getElementById("forgot-password-link");
+const forgotForm = document.getElementById("forgot-form");
+const resetPasswordForm = document.getElementById("reset-password-form");
 
 const singUpButton = document.getElementById("sign-up-btn");
 const singInButton = document.getElementById("sign-in-btn");
@@ -13,7 +20,10 @@ const loginBtnInNavbar = document.getElementById("navlogin-btn");
 const HomeBtnInNavbar = document.getElementById("navhome-btn");
 const navBarDashboardBTN = document.getElementById("navdashboard-btn");
 const logoutButton = document.getElementById("logout-btn");
+const backToLoginFromForgot = document.getElementById("back-to-login-from-forgot");
+const backToLoginFromReset = document.getElementById("back-to-login-from-reset");
 
+let resetEmail = ""; 
 let loggedIn;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -32,6 +42,18 @@ if (token) {
 }
 });
 
+// ----------------------------Show view fc  --------------------------------------------
+function showView(viewToSHow) {
+  mainView.classList.add("hidden");
+  signinView.classList.add("hidden");
+  signUpView.classList.add("hidden");
+  mainView.classList.add("hidden");
+  myView.classList.add("hidden");
+  forgotView.classList.add("hidden");
+  resetPasswordView.classList.add("hidden");
+  viewToSHow.classList.remove("hidden");
+}
+
 function updateNavbar() {
   const token = localStorage.getItem("accessToken");
   if (token) {
@@ -44,18 +66,25 @@ function updateNavbar() {
   }
 }
 
+// --- Navigation Click Listeners ---
+forgotPasswordLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  showView(forgotView);
+});
+
+backToLoginFromForgot.addEventListener("click", (e) => {
+  e.preventDefault();
+  showView(signinView);
+});
+
+backToLoginFromReset.addEventListener("click", (e) => {
+  e.preventDefault();
+  showView(signinView);
+});
+
 navBarDashboardBTN.addEventListener("click", (e) => {
   showView(myView);
 });
-
-function showView(viewToSHow) {
-  mainView.classList.add("hidden");
-  signinView.classList.add("hidden");
-  signUpView.classList.add("hidden");
-  mainView.classList.add("hidden");
-  myView.classList.add("hidden");
-  viewToSHow.classList.remove("hidden");
-}
 
 loginBtnInNavbar.addEventListener("click", (e) => {
   e.preventDefault();
@@ -80,10 +109,6 @@ singInButton.addEventListener("click", (e) => {
   showView(signinView);
 });
 
-// signUpForm.addEventListener("submit", (e) => {
-//   e.preventDefault();
-
-// });
 
 //-------------------------Logout----------------------------
 
@@ -153,3 +178,46 @@ signUpForm.addEventListener("submit",async(e)=>{
   }
 
 })
+
+// --- ---------------------------Send OTP -------------------------------
+forgotForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  resetEmail = document.getElementById("forgot_email").value.trim();
+
+  try {
+    await api.post("/auth/forgot-password", { email: resetEmail });
+
+    alert("OTP sent to your email. Please check your inbox!");
+    forgotForm.reset();
+    showView(resetPasswordView);
+  } catch (err) {
+    console.error("Failed to send OTP:", err);
+    const message = err.response?.data?.message || "Error sending OTP. Please try again.";
+    alert(message);
+  }
+});
+
+// ------------------------------Reset Password ----------------------------------------------
+resetPasswordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const otp = document.getElementById("reset_otp").value.trim();
+  const newPassword = document.getElementById("new_password").value;
+
+  try {
+    await api.post("/auth/reset-password", {
+      email: resetEmail,
+      otp: otp,
+      new_password: newPassword,
+    });
+
+    alert("Password reset successfully! Please sign in with your new password.");
+    resetPasswordForm.reset();
+    resetEmail = "";
+    showView(signinView);
+  } catch (err) {
+    console.error("Failed to reset password:", err);
+    const message = err.response?.data?.message || "Invalid OTP or request failed.";
+    alert(message);
+  }
+});
