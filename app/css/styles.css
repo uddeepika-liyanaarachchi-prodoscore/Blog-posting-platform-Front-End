@@ -613,6 +613,45 @@ header h1 {
   filter: blur(2px);
 }
 
+/* ------Forget password------------------ */
+#login-view,
+#sign-up-view,
+#forgot-view,
+#reset-password-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 60px;
+}
+
+#forgot-form{
+  margin-top: 40px;
+}
+
+.form-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(156, 163, 175, 1);
+  margin-top: 0.75rem;
+  line-height: 1.4;
+}
+
+#forgot-form .input-group {
+  margin-top: 1.25rem;
+}
+
+#forgot-form .btn-action {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+#forgot-view .signin {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(55, 65, 81, 0.6);
+}
+
 /* --------------------------------Media Queries----------------------------------------- */
 
 @media screen and (max-width: 425px) {

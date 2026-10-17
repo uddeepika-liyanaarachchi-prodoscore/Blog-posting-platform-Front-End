@@ -108,7 +108,7 @@
               placeholder="Enter password"
             />
             <div class="forgot">
-              <a href="#">Forgot Password?</a>
+              <a href="#" id="forgot-password-link">Forgot Password?</a>
             </div>
           </div>
           <button type="submit" class="sign">Sign in</button>
@@ -175,7 +175,7 @@
         </p>
       </div>
     </section>
-
+    <!-- MY VIEW-->
     <section id="my-view" class="hidden">
       <header>
         <h1 id="HI">Welcome to Blog Poster</h1>
@@ -183,7 +183,7 @@
       </header>
       <section class="pins-grid"></section>
     </section>
-
+    <!-- PUBLIC VIEW -->
     <section id="main-view" class="hidden">
       <header>
         <h1>Read & Explore</h1>
@@ -202,6 +202,64 @@
         </div>
       </div>
     </div>
+
+    <!-- FORGOT PASSWORD(Request OTP) -->
+    <section id="forgot-view" class="hidden">
+      <div class="form-container">
+        <p class="title">Forgot Password</p>
+        <form class="form" id="forgot-form">
+          <div class="input-group">
+            <label for="forgot_email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="forgot_email"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <button style="margin-top: 6%" class="sign" type="submit">
+            Send OTP
+          </button>
+        </form>
+        <p class="signin" id="back-to-login-from-forgot">
+          Remember password? <a href="#">Sign In</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- RESET PASSWORD(Reset Password) -->
+    <section id="reset-password-view" class="hidden">
+      <div class="form-container">
+        <p class="title">Reset Password</p>
+        <form class="form" id="reset-password-form">
+          <div class="input-group">
+            <label for="reset_otp">OTP Code</label>
+            <input
+              type="text"
+              id="reset_otp"
+              required
+              placeholder="Enter 6-digit OTP"
+            />
+          </div>
+          <div class="input-group">
+            <label for="new_password">New Password</label>
+            <input
+              type="password"
+              id="new_password"
+              required
+              placeholder="Enter new password"
+            />
+          </div>
+          <button style="margin-top: 6%" class="sign" type="submit">
+            Reset Password
+          </button>
+        </form>
+        <p class="signin" id="back-to-login-from-reset">
+          Cancel and <a href="#">Sign In</a>
+        </p>
+      </div>
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="./js/user.js" defer></script>
     <script></script>
