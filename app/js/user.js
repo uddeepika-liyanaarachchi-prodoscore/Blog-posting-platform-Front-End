@@ -1,4 +1,5 @@
 import api from "./api.js";
+import { notify } from "./notify.js";
 import { loadPublicPosts, loadUserPosts } from "./posts.js";
 
 const signinView = document.getElementById("login-view");
@@ -20,26 +21,29 @@ const loginBtnInNavbar = document.getElementById("navlogin-btn");
 const HomeBtnInNavbar = document.getElementById("navhome-btn");
 const navBarDashboardBTN = document.getElementById("navdashboard-btn");
 const logoutButton = document.getElementById("logout-btn");
-const backToLoginFromForgot = document.getElementById("back-to-login-from-forgot");
-const backToLoginFromReset = document.getElementById("back-to-login-from-reset");
+const backToLoginFromForgot = document.getElementById(
+  "back-to-login-from-forgot",
+);
+const backToLoginFromReset = document.getElementById(
+  "back-to-login-from-reset",
+);
 
-let resetEmail = ""; 
+let resetEmail = "";
 let loggedIn;
 
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("accessToken");
-   loadPublicPosts(); 
-if (token) {
-  loggedIn = true;
-  updateNavbar();
-  showView(myView);
-  loadUserPosts(); 
-} else {
-  loggedIn = false;
-  updateNavbar();
-  showView(mainView);
- 
-}
+  loadPublicPosts();
+  if (token) {
+    loggedIn = true;
+    updateNavbar();
+    showView(myView);
+    loadUserPosts();
+  } else {
+    loggedIn = false;
+    updateNavbar();
+    showView(mainView);
+  }
 });
 
 // ----------------------------Show view fc  --------------------------------------------
@@ -109,7 +113,6 @@ singInButton.addEventListener("click", (e) => {
   showView(signinView);
 });
 
-
 //-------------------------Logout----------------------------
 
 logoutButton.addEventListener("click", (e) => {
@@ -131,31 +134,31 @@ signInForm.addEventListener("submit", async (e) => {
     const response = await api.post("/auth/login", {
       email,
       password,
-    });  
+    });
 
-    const { access_token, refresh_token,id } = response.data;
+    const { access_token, refresh_token, id } = response.data;
 
     if (access_token) localStorage.setItem("accessToken", access_token);
     if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
-    if (id) localStorage.setItem("userID",id)
+    if (id) localStorage.setItem("userID", id);
     console.log(response.data);
-    
-    loggedIn = true;
-    updateNavbar();
-    signInForm.reset();
-    showView(myView);
-    loadUserPosts(); 
 
+    notify.success("Sign up successful! Please sign in.");
+
+    // loggedIn = true;
+    // updateNavbar();
+    // signInForm.reset();
+    // showView(myView);
+    // loadUserPosts();
   } catch (err) {
     console.error("Login failed:", err);
-    const message = err.response?.data?.message || "Invalid credentials. Please try again.";
-    alert(message);
+    notify.error("Invalid credentials. Please try again.");
   }
 });
 
 // ----------------------- Register---------------------------------------------
 
-signUpForm.addEventListener("submit",async(e)=>{
+signUpForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const email = document.getElementById("signup_mail").value.trim();
@@ -165,19 +168,16 @@ signUpForm.addEventListener("submit",async(e)=>{
     const response = await api.post("/auth/register", {
       email,
       password,
-    })
+    });
 
-     alert("Sign up successful! Please sign in.");
-     signUpForm.reset();
-     showView(signinView);
+    notify.success("Sign up successful! Please sign in.");
+    signUpForm.reset();
+    showView(signinView);
   } catch (err) {
     console.error("Login failed:", err);
-    const message =
-      err.response?.data?.message || "Invalid credentials. Please try again.";
-    alert(message);
+    notify.error("Invalid credentials. Please try again.");
   }
-
-})
+});
 
 // --- ---------------------------Send OTP -------------------------------
 forgotForm.addEventListener("submit", async (e) => {
@@ -186,14 +186,12 @@ forgotForm.addEventListener("submit", async (e) => {
 
   try {
     await api.post("/auth/forgot-password", { email: resetEmail });
-
-    alert("OTP sent to your email. Please check your inbox!");
+    notify.success("OTP sent to your email. Please check your inbox!");
     forgotForm.reset();
     showView(resetPasswordView);
   } catch (err) {
     console.error("Failed to send OTP:", err);
-    const message = err.response?.data?.message || "Error sending OTP. Please try again.";
-    alert(message);
+    notify.error("Error sending OTP. Please try again.");
   }
 });
 
@@ -211,13 +209,14 @@ resetPasswordForm.addEventListener("submit", async (e) => {
       new_password: newPassword,
     });
 
-    alert("Password reset successfully! Please sign in with your new password.");
+    notify.success(
+      "Password reset successfully! Please sign in with your new password.",
+    );
     resetPasswordForm.reset();
     resetEmail = "";
     showView(signinView);
   } catch (err) {
     console.error("Failed to reset password:", err);
-    const message = err.response?.data?.message || "Invalid OTP or request failed.";
-    alert(message);
+    notify.error("Invalid OTP or request failed.");
   }
 });

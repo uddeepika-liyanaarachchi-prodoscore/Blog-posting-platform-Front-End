@@ -652,6 +652,21 @@ header h1 {
   border-top: 1px solid rgba(55, 65, 81, 0.6);
 }
 
+/*-------------------AUTO FILL Suggestions BG Color-------------------------*/
+/* Chrome, Safari, Edge autofill fix */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px  #11192e inset !important;
+    -webkit-text-fill-color: #fff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* For Firefox */
+input:autofill {
+    box-shadow: 0 0 0px 1000px #11192e inset !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+
 /* --------------------------------Media Queries----------------------------------------- */
 
 @media screen and (max-width: 425px) {
