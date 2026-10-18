@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Poster Project</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
   </head>
   <body>
-    <!-- <div class="nav">
-        <div class="nav-container">
-          <a href="#" class="nav-link" id="navhome-btn">Home</a>
-          <a href="#" class="nav-link " id="navlogin-btn">login</a>
-          <a href="#" class="nav-link hidden" id="navdashboard-btn">Dashboard</a>
-        </div>
-      </div> -->
+    <!----------Navigation Bar----------------------->
     <div class="nav">
       <div class="nav-container">
         <!-- Home Link -->
@@ -83,7 +82,7 @@
       </div>
     </div>
 
-    <!-- LOGIN PAGE -->
+    <!-- -----------LOGIN PAGE -------------------->
     <section id="login-view" class="hidden">
       <div class="form-container">
         <p class="title">Login</p>
@@ -108,7 +107,7 @@
               placeholder="Enter password"
             />
             <div class="forgot">
-              <a href="#">Forgot Password?</a>
+              <a href="#" id="forgot-password-link">Forgot Password?</a>
             </div>
           </div>
           <button type="submit" class="sign">Sign in</button>
@@ -119,17 +118,15 @@
           <div class="line"></div>
         </div>
         <div class="social-icons">
-          <button aria-label="Log in with Google" class="icon">
+          <button
+            type="button"
+            aria-label="Log in with Google"
+            id="google-btn-container"
+            class="icon"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
               <path
                 d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"
-              ></path>
-            </svg>
-          </button>
-          <button aria-label="Log in with Twitter" class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-              <path
-                d="M31.937 6.093c-1.177 0.516-2.437 0.871-3.765 1.032 1.355-0.813 2.391-2.099 2.885-3.631-1.271 0.74-2.677 1.276-4.172 1.579-1.192-1.276-2.896-2.079-4.787-2.079-3.625 0-6.563 2.937-6.563 6.557 0 0.521 0.063 1.021 0.172 1.495-5.453-0.255-10.287-2.875-13.52-6.833-0.568 0.964-0.891 2.084-0.891 3.303 0 2.281 1.161 4.281 2.916 5.457-1.073-0.031-2.083-0.328-2.968-0.817v0.079c0 3.181 2.26 5.833 5.26 6.437-0.547 0.145-1.131 0.229-1.724 0.229-0.421 0-0.823-0.041-1.224-0.115 0.844 2.604 3.26 4.5 6.14 4.557-2.239 1.755-5.077 2.801-8.135 2.801-0.521 0-1.041-0.025-1.563-0.088 2.917 1.86 6.36 2.948 10.079 2.948 12.067 0 18.661-9.995 18.661-18.651 0-0.276 0-0.557-0.021-0.839 1.287-0.917 2.401-2.079 3.281-3.396z"
               ></path>
             </svg>
           </button>
@@ -140,7 +137,7 @@
       </div>
     </section>
 
-    <!-- SIGN UP PAGE -->
+    <!------------- SIGN UP PAGE ---------------------->
     <section id="sign-up-view" class="hidden">
       <div class="form-container">
         <p class="title">Register</p>
@@ -175,15 +172,31 @@
         </p>
       </div>
     </section>
-
+    <!-- -------------MY VIEW---------------------------->
     <section id="my-view" class="hidden">
       <header>
         <h1 id="HI">Welcome to Blog Poster</h1>
-        <button id="logout-btn" class="logout-btn">Logout</button>
+        <div
+          style="
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <button
+            id="open-create-post-btn"
+            class="sign"
+            style="padding: 8px 16px"
+          >
+            + New Post
+          </button>
+          <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
       </header>
       <section class="pins-grid"></section>
     </section>
-
+    <!-- --------------PUBLIC VIEW --------------------->
     <section id="main-view" class="hidden">
       <header>
         <h1>Read & Explore</h1>
@@ -202,8 +215,239 @@
         </div>
       </div>
     </div>
+
+    <!-- --------------FORGOT PASSWORD(Request OTP) ------------------------>
+    <section id="forgot-view" class="hidden">
+      <div class="form-container">
+        <p class="title">Forgot Password</p>
+        <form class="form" id="forgot-form">
+          <div class="input-group">
+            <label for="forgot_email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="forgot_email"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <button style="margin-top: 6%" class="sign" type="submit">
+            Send OTP
+          </button>
+        </form>
+        <p class="signin" id="back-to-login-from-forgot">
+          Remember password? <a href="#">Sign In</a>
+        </p>
+      </div>
+    </section>
+
+    <!-------------- RESET PASSWORD(Reset Password) ---------------------->
+    <section id="reset-password-view" class="hidden">
+      <div class="form-container">
+        <p class="title">Reset Password</p>
+        <form class="form" id="reset-password-form">
+          <div class="input-group">
+            <label for="reset_otp">OTP Code</label>
+            <input
+              type="text"
+              id="reset_otp"
+              required
+              placeholder="Enter 6-digit OTP"
+            />
+          </div>
+          <div class="input-group">
+            <label for="new_password">New Password</label>
+            <input
+              type="password"
+              id="new_password"
+              required
+              placeholder="Enter new password"
+            />
+          </div>
+          <button style="margin-top: 6%" class="sign" type="submit">
+            Reset Password
+          </button>
+        </form>
+        <p class="signin" id="back-to-login-from-reset">
+          Cancel and <a href="#">Sign In</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- -------------CREATE / EDIT POST MODAL ----------------------->
+    <div id="post-form-modal" class="modal hidden">
+      <div class="modal-backdrop" id="form-modal-close-backdrop"></div>
+      <div class="modal-content" style="background-color: #11192e">
+        <button class="modal-close-btn" id="form-modal-close-btn">
+          &times;
+        </button>
+        <div class="modal-body">
+          <h2
+            id="form-modal-title"
+            style="color: aliceblue; margin-bottom: 12px"
+          >
+            Create New Post
+          </h2>
+          <form id="post-crud-form" enctype="multipart/form-data">
+            <input type="hidden" id="crud-post-id" value="" />
+
+            <div class="input-group">
+              <label for="crud-title">Title</label>
+              <input
+                type="text"
+                id="crud-title"
+                name="title"
+                required
+                placeholder="Enter post title"
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="crud-content">Content</label>
+              <textarea
+                id="crud-content"
+                name="content"
+                rows="5"
+                required
+                placeholder="Write post content here..."
+                style="
+                  width: 100%;
+                  border-radius: 8px;
+                  padding: 10px;
+                  border: 1px solid #11192e;
+                  background-color: #0d131f;
+                  color: aliceblue;
+                "
+              ></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="crud-image">Post Image</label>
+              <input
+                type="file"
+                id="crud-image"
+                name="image"
+                accept="image/*"
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="crud-submit-btn"
+              class="sign"
+              style="margin-top: 15px"
+            >
+              Save Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- -------------ADMIN VIEW---------------------------->
+    <section id="admin-view" class="hidden">
+      <header>
+        <h1>Welcome Admin</h1>
+        <div style="display: flex; gap: 12px; align-items: center">
+          <button
+            id="open-register-admin-btn"
+            class="sign"
+            style="padding: 8px 18px; margin-top: 0; width: auto"
+          >
+            + Add an Admin
+          </button>
+          <button id="admin-logout-btn" class="logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <div class="table-container">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <tr>
+              <td colspan="5" style="text-align: center">Loading users...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------- REGISTER ADMIN MODAL ----------------------->
+    <div id="admin-register-modal" class="modal hidden">
+      <div class="modal-backdrop" id="admin-modal-backdrop"></div>
+      <div
+        class="modal-content"
+        style="
+          background-color: #111827;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        "
+      >
+        <button class="modal-close-btn" id="admin-modal-close-btn">
+          &times;
+        </button>
+        <div class="modal-body" style="padding: 2rem">
+          <h2 style="color: #f3f4f6; margin-bottom: 1.5rem; font-size: 1.5rem">
+            Add New Admin
+          </h2>
+          <form class="form" id="register-admin-form">
+            <div class="input-group">
+              <label for="admin_reg_email">Admin Email</label>
+              <input
+                type="email"
+                id="admin_reg_email"
+                required
+                placeholder="admin@example.com"
+              />
+            </div>
+            <div class="input-group">
+              <label for="admin_reg_password">Password</label>
+              <input
+                type="password"
+                id="admin_reg_password"
+                required
+                placeholder="Enter strong password"
+              />
+            </div>
+            <button
+              type="submit"
+              id="submit-admin-btn"
+              class="sign"
+              style="margin-top: 0.8rem"
+            >
+              Register Admin
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI CHATBOT CONTAINER -->
+<div id="ai-robo-chatbot-container">
+    <div id="chatbot-toggle-btn"><div class="robo-3d-avatar"><spline-viewer url="https://prod.spline.design/1y4iUCsbmpOKBntP/scene.splinecode"></spline-viewer></div></div>
+    <div id="chatbot-window" style="display: none;">
+        <div class="chatbot-header"><h4>Smart Ai Assistant</h4><button id="close-chatbot">×</button></div>
+        <div class="chatbot-messages" id="chatbot-msg-box"><div class="msg bot-msg">Hello! 👋 I'm your Smart AI assistant. How can I help you today?</div></div>
+        <div class="chatbot-input-area"><input type="text" id="chatbot-user-input" placeholder="Type a message..."><button id="chatbot-send-btn">Send</button></div>
+    </div>
+</div>
+
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.97/build/spline-viewer.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="./js/user.js" defer></script>
-    <script></script>
+     <script type="module" src="./js/chatbot.js" defer></script>
   </body>
 </html>
