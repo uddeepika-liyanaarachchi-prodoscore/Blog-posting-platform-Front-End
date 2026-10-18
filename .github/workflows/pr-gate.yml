@@ -1,0 +1,53 @@
+name: Frontend PR Gate & QA Automation
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e-quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Frontend PR Code
+        uses: actions/checkout@v4
+        with:
+          path: Blog-Poster-Project-FE
+
+      - name: Checkout QA Automation Repo
+        uses: actions/checkout@v4
+        with:
+          repository: uddeepika-liyanaarachchi-prodoscore/Blog-posting-platform-QA-Automation
+          token: ${{ secrets.QA_TRIGGER_TOKEN }}
+          path: qa-automation
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Set up Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run QA Tests (Local Server Fixture)
+        working-directory: qa-automation
+        env:
+          BROWSER: "chrome"
+          HEADLESS: "true"
+          EXPLICIT_WAIT: "12"
+        run: |
+          uv sync
+          uv run python run_tests.py
+
+      - name: Upload Report on Failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-qa-test-report
+          path: qa-automation/reports/
