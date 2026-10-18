@@ -277,12 +277,17 @@
     <!-- -------------CREATE / EDIT POST MODAL ----------------------->
     <div id="post-form-modal" class="modal hidden">
       <div class="modal-backdrop" id="form-modal-close-backdrop"></div>
-      <div class="modal-content">
+      <div class="modal-content" style="background-color: #11192e">
         <button class="modal-close-btn" id="form-modal-close-btn">
           &times;
         </button>
         <div class="modal-body">
-          <h2 id="form-modal-title">Create New Post</h2>
+          <h2
+            id="form-modal-title"
+            style="color: aliceblue; margin-bottom: 12px"
+          >
+            Create New Post
+          </h2>
           <form id="post-crud-form" enctype="multipart/form-data">
             <input type="hidden" id="crud-post-id" value="" />
 
@@ -309,7 +314,9 @@
                   width: 100%;
                   border-radius: 8px;
                   padding: 10px;
-                  border: 1px solid #ccc;
+                  border: 1px solid #11192e;
+                  background-color: #0d131f;
+                  color: aliceblue;
                 "
               ></textarea>
             </div>
@@ -336,6 +343,92 @@
         </div>
       </div>
     </div>
+
+    <!-- -------------ADMIN VIEW---------------------------->
+    <section id="admin-view" class="hidden">
+      <header>
+        <h1>Welcome Admin</h1>
+        <div style="display: flex; gap: 12px; align-items: center">
+          <button
+            id="open-register-admin-btn"
+            class="sign"
+            style="padding: 8px 18px; margin-top: 0; width: auto"
+          >
+            + Add an Admin
+          </button>
+          <button id="admin-logout-btn" class="logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <div class="table-container">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <tr>
+              <td colspan="5" style="text-align: center">Loading users...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------- REGISTER ADMIN MODAL ----------------------->
+    <div id="admin-register-modal" class="modal hidden">
+      <div class="modal-backdrop" id="admin-modal-backdrop"></div>
+      <div
+        class="modal-content"
+        style="
+          background-color: #111827;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        "
+      >
+        <button class="modal-close-btn" id="admin-modal-close-btn">
+          &times;
+        </button>
+        <div class="modal-body" style="padding: 2rem">
+          <h2 style="color: #f3f4f6; margin-bottom: 1.5rem; font-size: 1.5rem">
+            Add New Admin
+          </h2>
+          <form class="form" id="register-admin-form">
+            <div class="input-group">
+              <label for="admin_reg_email">Admin Email</label>
+              <input
+                type="email"
+                id="admin_reg_email"
+                required
+                placeholder="admin@example.com"
+              />
+            </div>
+            <div class="input-group">
+              <label for="admin_reg_password">Password</label>
+              <input
+                type="password"
+                id="admin_reg_password"
+                required
+                placeholder="Enter strong password"
+              />
+            </div>
+            <button
+              type="submit"
+              id="submit-admin-btn"
+              class="sign"
+              style="margin-top: 0.8rem"
+            >
+              Register Admin
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"

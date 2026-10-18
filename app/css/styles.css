@@ -552,6 +552,71 @@ input:autofill {
   padding-top: 50px;
  }
 
+ /* ---------------- Table Styles (Admin View) ---------------- */
+#admin-view {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #111827;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #e5e7eb;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.custom-table th {
+  background-color: #0d131f;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.custom-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role-badge.admin {
+  background: rgba(167, 139, 250, 0.2);
+  color: #c4b5fd;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+}
+
+.role-badge.user {
+  background: rgba(15, 190, 202, 0.15);
+  color: #22d3ee;
+  border: 1px solid rgba(15, 190, 202, 0.3);
+}
+
+
 
 /* --------------------------------Media Queries----------------------------------------- */
 
@@ -647,6 +712,20 @@ input:autofill {
     gap: 20px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  #admin-view {
+    padding: 20px 10px;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
   .pins-grid {
     grid-template-columns: repeat(3, 1fr); /* තීරුවකට cards 3ක් */

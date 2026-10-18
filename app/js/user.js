@@ -28,18 +28,34 @@ const backToLoginFromReset = document.getElementById(
   "back-to-login-from-reset",
 );
 
+// -----------------ADMIN-------------------------
+const adminView = document.getElementById("admin-view");
+const usersTableBody = document.getElementById("users-table-body");
+const adminRegisterModal = document.getElementById("admin-register-modal");
+const openRegisterAdminBtn = document.getElementById("open-register-admin-btn");
+const adminModalCloseBtn = document.getElementById("admin-modal-close-btn");
+const adminModalBackdrop = document.getElementById("admin-modal-backdrop");
+const registerAdminForm = document.getElementById("register-admin-form");
+const adminLogoutBtn = document.getElementById("admin-logout-btn");
+
 let resetEmail = "";
 let loggedIn;
 
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("accessToken");
+  const role = localStorage.getItem("userRole");
   loadPublicPosts();
   initGoogleSignIn();
   if (token) {
     loggedIn = true;
     updateNavbar();
-    showView(myView);
-    loadUserPosts();
+    if (role === "admin") {
+      showView(adminView);
+      loadAllUsers();
+    } else {
+      showView(myView);
+      loadUserPosts();
+    }
   } else {
     loggedIn = false;
     updateNavbar();
@@ -56,6 +72,7 @@ function showView(viewToSHow) {
   myView.classList.add("hidden");
   forgotView.classList.add("hidden");
   resetPasswordView.classList.add("hidden");
+  if (adminView) adminView.classList.add("hidden");
   viewToSHow.classList.remove("hidden");
 }
 
@@ -88,7 +105,14 @@ backToLoginFromReset.addEventListener("click", (e) => {
 });
 
 navBarDashboardBTN.addEventListener("click", (e) => {
-  showView(myView);
+  e.preventDefault();
+  const role = localStorage.getItem("userRole");
+  if (role === "admin") {
+    showView(adminView);
+    loadAllUsers();
+  } else {
+    showView(myView);
+  }
 });
 
 loginBtnInNavbar.addEventListener("click", (e) => {
@@ -114,6 +138,21 @@ singInButton.addEventListener("click", (e) => {
   showView(signinView);
 });
 
+// --- Admin Register Modal Logic ---
+openRegisterAdminBtn?.addEventListener("click", () => {
+  registerAdminForm.reset();
+  adminRegisterModal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+});
+
+function closeAdminModal() {
+  adminRegisterModal.classList.add("hidden");
+  document.body.style.overflow = "auto";
+}
+
+adminModalCloseBtn?.addEventListener("click", closeAdminModal);
+adminModalBackdrop?.addEventListener("click", closeAdminModal);
+
 //-------------------------Logout----------------------------
 
 logoutButton.addEventListener("click", (e) => {
@@ -137,11 +176,12 @@ signInForm.addEventListener("submit", async (e) => {
       password,
     });
 
-    const { access_token, refresh_token, id } = response.data;
+    const { access_token, refresh_token, id, role } = response.data;
 
     if (access_token) localStorage.setItem("accessToken", access_token);
     if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
     if (id) localStorage.setItem("userID", id);
+    if (role) localStorage.setItem("userRole", role);
     console.log(response.data);
 
     notify.success("Sign up successful! Please sign in.");
@@ -149,8 +189,13 @@ signInForm.addEventListener("submit", async (e) => {
     loggedIn = true;
     updateNavbar();
     signInForm.reset();
-    showView(myView);
-    loadUserPosts();
+    if (role === "admin") {
+      showView(adminView);
+      loadAllUsers();
+    } else {
+      showView(myView);
+      loadUserPosts();
+    }
   } catch (err) {
     console.error("Login failed:", err);
     notify.error("Invalid credentials. Please try again.");
@@ -234,11 +279,8 @@ async function initGoogleSignIn() {
     const clientId = res.data.client_id;
     console.log(res.data);
     console.log(clientId);
-    
-    
-    if (!clientId) console.log("NO ID FOUND");
-    ;
 
+    if (!clientId) console.log("NO ID FOUND");
     google.accounts.id.initialize({
       client_id: clientId,
       callback: handleGoogleLoginResponse,
@@ -261,25 +303,31 @@ async function initGoogleSignIn() {
 // ---------------------------------Handle Google LogIN-------------------------------------------------------
 
 async function handleGoogleLoginResponse(response) {
-  const idToken = response.credential; 
+  const idToken = response.credential;
 
   try {
     const res = await api.post("/auth/google", {
       token: idToken,
     });
 
-    const { access_token, refresh_token, id } = res.data;
+    const { access_token, refresh_token, id, role } = res.data;
 
     if (access_token) localStorage.setItem("accessToken", access_token);
     if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
     if (id) localStorage.setItem("userID", id);
+    if (role) localStorage.setItem("userRole", role);
 
     notify.success("Google Sign-In successful!");
 
     loggedIn = true;
     updateNavbar();
-    showView(myView);
-    loadUserPosts();
+    if (role === "admin") {
+      showView(adminView);
+      loadAllUsers();
+    } else {
+      showView(myView);
+      loadUserPosts();
+    }
   } catch (err) {
     console.error("Google auth error:", err);
     notify.error(
@@ -287,3 +335,83 @@ async function handleGoogleLoginResponse(response) {
     );
   }
 }
+
+// --------------------------------Load all users--------------------------------------------------------------------
+
+async function loadAllUsers() {
+  if (!usersTableBody) return;
+  usersTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #9ca3af;">Loading users...</td></tr>`;
+
+  try {
+    const response = await api.get("/auth/get-all-users");
+    const users = response.data || [];
+
+    if (users.length === 0) {
+      usersTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">No users found.</td></tr>`;
+      return;
+    }
+
+    usersTableBody.innerHTML = users
+      .map((u) => {
+        const fullName =
+          [u.first_name, u.last_name].filter(Boolean).join(" ") || "-";
+        const phone = u.phone_number || "-";
+        const roleClass = u.role === "admin" ? "admin" : "user";
+
+        return `
+          <tr>
+            <td>#${u.id}</td>
+            <td>${u.email}</td>
+            <td>${fullName}</td>
+            <td>${phone}</td>
+            <td><span class="role-badge ${roleClass}">${u.role}</span></td>
+          </tr>
+        `;
+      })
+      .join("");
+  } catch (err) {
+    console.error("Failed to load users:", err);
+    usersTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #ef4444;">Failed to load users.</td></tr>`;
+  }
+}
+
+// -------------------------Register Admin -------------------------------------------- ---
+registerAdminForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("admin_reg_email").value.trim();
+  const password = document.getElementById("admin_reg_password").value;
+  const submitBtn = document.getElementById("submit-admin-btn");
+  const token = localStorage.getItem("accessToken");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Creating...";
+
+  try {
+    await api.post(
+      "/auth/register-admin",
+      { email, password },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    notify.success("Admin registered successfully!");
+    closeAdminModal();
+    loadAllUsers();
+  } catch (err) {
+    console.error("Admin registration failed:", err);
+    notify.error(err.response?.data?.detail || "Failed to create admin");
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Register Admin";
+  }
+});
+
+// ---------------------------- Admin Logout ------------------------- ---
+adminLogoutBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.clear();
+  loggedIn = false;
+  updateNavbar();
+  showView(signinView);
+});
