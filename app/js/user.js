@@ -34,6 +34,7 @@ let loggedIn;
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("accessToken");
   loadPublicPosts();
+  initGoogleSignIn();
   if (token) {
     loggedIn = true;
     updateNavbar();
@@ -145,11 +146,11 @@ signInForm.addEventListener("submit", async (e) => {
 
     notify.success("Sign up successful! Please sign in.");
 
-    // loggedIn = true;
-    // updateNavbar();
-    // signInForm.reset();
-    // showView(myView);
-    // loadUserPosts();
+    loggedIn = true;
+    updateNavbar();
+    signInForm.reset();
+    showView(myView);
+    loadUserPosts();
   } catch (err) {
     console.error("Login failed:", err);
     notify.error("Invalid credentials. Please try again.");
@@ -220,3 +221,69 @@ resetPasswordForm.addEventListener("submit", async (e) => {
     notify.error("Invalid OTP or request failed.");
   }
 });
+
+// ----------------------Initialize Google login - (take google client id from DB-----------------------------------)
+async function initGoogleSignIn() {
+  if (typeof google === "undefined" || !google.accounts) {
+    setTimeout(initGoogleSignIn, 300);
+    return;
+  }
+
+  try {
+    const res = await api.get("/auth/config/google-client-id");
+    const clientId = res.data.client_id;
+    console.log(res.data);
+    console.log(clientId);
+    
+    
+    if (!clientId) console.log("NO ID FOUND");
+    ;
+
+    google.accounts.id.initialize({
+      client_id: clientId,
+      callback: handleGoogleLoginResponse,
+    });
+
+    const container = document.getElementById("google-btn-container");
+    if (container) {
+      google.accounts.id.renderButton(container, {
+        theme: "filled_black",
+        size: "large",
+        shape: "rectangular",
+        width: 280,
+      });
+    }
+  } catch (err) {
+    console.error("Failed to load Google Client ID:", err);
+  }
+}
+
+// ---------------------------------Handle Google LogIN-------------------------------------------------------
+
+async function handleGoogleLoginResponse(response) {
+  const idToken = response.credential; 
+
+  try {
+    const res = await api.post("/auth/google", {
+      token: idToken,
+    });
+
+    const { access_token, refresh_token, id } = res.data;
+
+    if (access_token) localStorage.setItem("accessToken", access_token);
+    if (refresh_token) localStorage.setItem("refreshToken", refresh_token);
+    if (id) localStorage.setItem("userID", id);
+
+    notify.success("Google Sign-In successful!");
+
+    loggedIn = true;
+    updateNavbar();
+    showView(myView);
+    loadUserPosts();
+  } catch (err) {
+    console.error("Google auth error:", err);
+    notify.error(
+      err.response?.data?.message || "Google login failed. Please try again.",
+    );
+  }
+}
