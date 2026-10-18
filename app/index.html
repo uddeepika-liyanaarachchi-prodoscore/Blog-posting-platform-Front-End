@@ -12,13 +12,7 @@
     />
   </head>
   <body>
-    <!-- <div class="nav">
-        <div class="nav-container">
-          <a href="#" class="nav-link" id="navhome-btn">Home</a>
-          <a href="#" class="nav-link " id="navlogin-btn">login</a>
-          <a href="#" class="nav-link hidden" id="navdashboard-btn">Dashboard</a>
-        </div>
-      </div> -->
+    <!----------Navigation Bar----------------------->
     <div class="nav">
       <div class="nav-container">
         <!-- Home Link -->
@@ -88,7 +82,7 @@
       </div>
     </div>
 
-    <!-- LOGIN PAGE -->
+    <!-- -----------LOGIN PAGE -------------------->
     <section id="login-view" class="hidden">
       <div class="form-container">
         <p class="title">Login</p>
@@ -143,7 +137,7 @@
       </div>
     </section>
 
-    <!-- SIGN UP PAGE -->
+    <!------------- SIGN UP PAGE ---------------------->
     <section id="sign-up-view" class="hidden">
       <div class="form-container">
         <p class="title">Register</p>
@@ -178,15 +172,31 @@
         </p>
       </div>
     </section>
-    <!-- MY VIEW-->
+    <!-- -------------MY VIEW---------------------------->
     <section id="my-view" class="hidden">
       <header>
         <h1 id="HI">Welcome to Blog Poster</h1>
-        <button id="logout-btn" class="logout-btn">Logout</button>
+        <div
+          style="
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <button
+            id="open-create-post-btn"
+            class="sign"
+            style="padding: 8px 16px"
+          >
+            + New Post
+          </button>
+          <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
       </header>
       <section class="pins-grid"></section>
     </section>
-    <!-- PUBLIC VIEW -->
+    <!-- --------------PUBLIC VIEW --------------------->
     <section id="main-view" class="hidden">
       <header>
         <h1>Read & Explore</h1>
@@ -206,7 +216,7 @@
       </div>
     </div>
 
-    <!-- FORGOT PASSWORD(Request OTP) -->
+    <!-- --------------FORGOT PASSWORD(Request OTP) ------------------------>
     <section id="forgot-view" class="hidden">
       <div class="form-container">
         <p class="title">Forgot Password</p>
@@ -231,7 +241,7 @@
       </div>
     </section>
 
-    <!-- RESET PASSWORD(Reset Password) -->
+    <!-------------- RESET PASSWORD(Reset Password) ---------------------->
     <section id="reset-password-view" class="hidden">
       <div class="form-container">
         <p class="title">Reset Password</p>
@@ -263,6 +273,69 @@
         </p>
       </div>
     </section>
+
+    <!-- -------------CREATE / EDIT POST MODAL ----------------------->
+    <div id="post-form-modal" class="modal hidden">
+      <div class="modal-backdrop" id="form-modal-close-backdrop"></div>
+      <div class="modal-content">
+        <button class="modal-close-btn" id="form-modal-close-btn">
+          &times;
+        </button>
+        <div class="modal-body">
+          <h2 id="form-modal-title">Create New Post</h2>
+          <form id="post-crud-form" enctype="multipart/form-data">
+            <input type="hidden" id="crud-post-id" value="" />
+
+            <div class="input-group">
+              <label for="crud-title">Title</label>
+              <input
+                type="text"
+                id="crud-title"
+                name="title"
+                required
+                placeholder="Enter post title"
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="crud-content">Content</label>
+              <textarea
+                id="crud-content"
+                name="content"
+                rows="5"
+                required
+                placeholder="Write post content here..."
+                style="
+                  width: 100%;
+                  border-radius: 8px;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                "
+              ></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="crud-image">Post Image</label>
+              <input
+                type="file"
+                id="crud-image"
+                name="image"
+                accept="image/*"
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="crud-submit-btn"
+              class="sign"
+              style="margin-top: 15px"
+            >
+              Save Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"
