@@ -429,13 +429,25 @@
       </div>
     </div>
 
+    <!-- AI CHATBOT CONTAINER -->
+<div id="ai-robo-chatbot-container">
+    <div id="chatbot-toggle-btn"><div class="robo-3d-avatar"><spline-viewer url="https://prod.spline.design/1y4iUCsbmpOKBntP/scene.splinecode"></spline-viewer></div></div>
+    <div id="chatbot-window" style="display: none;">
+        <div class="chatbot-header"><h4>Smart Ai Assistant</h4><button id="close-chatbot">×</button></div>
+        <div class="chatbot-messages" id="chatbot-msg-box"><div class="msg bot-msg">Hello! 👋 I'm your Smart AI assistant. How can I help you today?</div></div>
+        <div class="chatbot-input-area"><input type="text" id="chatbot-user-input" placeholder="Type a message..."><button id="chatbot-send-btn">Send</button></div>
+    </div>
+</div>
+
+
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.97/build/spline-viewer.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="./js/user.js" defer></script>
-    <script></script>
+     <script type="module" src="./js/chatbot.js" defer></script>
   </body>
 </html>
